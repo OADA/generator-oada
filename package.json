@@ -1,0 +1,37 @@
+{
+  "name": "generator-oada",
+  "version": "0.1.0",
+  "description": "OADA Yeoman generator.",
+  "main": "app/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "jshint --reporter node_modules/jshint-stylish/stylish.js .",
+    "style": "jscs ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OADA/generator-oada.git"
+  },
+  "keywords": [
+    "oada",
+    "yeoman-generator"
+  ],
+  "author": {
+    "name": "Alex Layton",
+    "email": "alex@layton.in",
+    "url": "http://alex.layton.in"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/OADA/generator-oada/issues"
+  },
+  "homepage": "https://github.com/OADA/generator-oada",
+  "dependencies": {
+    "git-config": "0.0.6",
+    "is_js": "^0.7.1",
+    "npmconf": "^2.1.1",
+    "object-assign": "^2.0.0",
+    "travis-encrypt": "^1.1.1",
+    "yeoman-generator": "^0.18.10"
+  }
+}

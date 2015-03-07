@@ -1,0 +1,29 @@
+{
+  "name": "<%= packageName %>",
+  "version": "<%= version %>",
+  "description": "<%= libDesc %>",
+  "main": "<%= main %>",
+  "scripts": {
+    "test": "mocha -w",
+    "cover": "instanbul cover --include-all-sources _mocha",
+    "lint": "jshint --reporter node_modules/jshint-stylish/stylish.js .",
+    "style": "jscs .",
+    "clean": "rm -rf ./coverage"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OADA/<%= repoName %>.git"
+  },
+  "keywords": [
+    "oada"
+  ],
+  "author": <%= authorJSON %>,
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/OADA/<%= repoName %>/issues"
+  },
+  "homepage": "https://github.com/OADA/<%= repoName %>"
+}
