@@ -5,7 +5,7 @@
   "main": "<%= main %>",
   "scripts": {
     "test": "mocha -w",
-    "cover": "instanbul cover --include-all-sources _mocha",
+    "cover": "istanbul cover _mocha",
     "lint": "jshint --reporter node_modules/jshint-stylish/stylish.js .",
     "style": "jscs .",
     "clean": "rm -rf ./coverage"

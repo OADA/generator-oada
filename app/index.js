@@ -303,6 +303,12 @@ module.exports = generators.Base.extend({
                 jsonSpaces
             );
         },
+        istanbul: function() {
+            this.fs.copy(
+                this.templatePath('istanbul.yml'),
+                this.destinationPath('.istanbul.yml')
+            );
+        },
         npm: function() {
             this.fs.copyTpl(
                 this.templatePath('_package.json'),
