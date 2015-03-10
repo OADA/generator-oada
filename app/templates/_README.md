@@ -10,6 +10,7 @@
 npm install <%= packageName %>
 ```
 
+## Usage ##
 ```javascript
 var <%= varName %> = require('<%= packageName %>');
 ```
