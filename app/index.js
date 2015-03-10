@@ -159,6 +159,13 @@ module.exports = generators.Base.extend({
                         generator.config.set('copyrightYear', year);
                         return year;
                     }
+                },
+                {
+                    store: true,
+                    name: 'gulpfile',
+                    type: 'confirm',
+                    default: 'true',
+                    message: 'Use gulp?'
                 }
             ];
 
@@ -288,6 +295,17 @@ module.exports = generators.Base.extend({
                 this.destinationPath('.jscsrc')
             );
         },
+        gulp: function() {
+            if (!this.context.gulpfile) {
+                return;
+            }
+
+            this.fs.copyTpl(
+                this.templatePath('_gulpfile.js'),
+                this.destinationPath('gulpfile.js'),
+                this.context
+            );
+        },
         mocha: function() {
             this.fs.copy(
                 this.templatePath('test/mocha.opts'),
@@ -366,6 +384,14 @@ module.exports = generators.Base.extend({
         },
         jscs: function() {
             this.npmInstall(['jscs'], {saveDev: true});
+        },
+        gulp: function() {
+            if (!this.context.gulpfile) {
+                return;
+            }
+
+            this.npmInstall(['gulp', 'gulp-jshint', 'gulp-jscs'],
+                    {saveDev: 'true'});
         }
     }
 });
