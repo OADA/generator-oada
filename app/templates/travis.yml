@@ -16,10 +16,10 @@ deploy:
     all_branches: true
     repo: OADA/<%= repoName %>
 before_install:
-- npm install -g coveralls
+ - npm install -g coveralls
 script:
 - npm run lint
 - npm run style
 - npm run cover
 after_success:
-- cat ./coverage/lcov.info | ./node_modules/.bin/coveralls --verbose
+- cat ./coverage/lcov.info | coveralls --verbose
