@@ -26,6 +26,7 @@
     "url": "https://github.com/OADA/generator-oada/issues"
   },
   "homepage": "https://github.com/OADA/generator-oada",
+  "preferGlobal": true,
   "dependencies": {
     "git-config": "0.0.6",
     "is_js": "^0.7.1",
