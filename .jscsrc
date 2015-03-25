@@ -2,5 +2,6 @@
     "preset": "google",
     "fileExtensions": [ ".js" ],
     "validateIndentation": 4,
+    "maximumLineLength": 80,
     "excludeFiles": [ "node_modules/**" ]
 }

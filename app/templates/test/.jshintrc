@@ -13,7 +13,6 @@
     "undef": true,
     "unused": true,
     "strict": true,
-    "maxlen": 80,
     "trailing": true,
     "sub": true,
     "freeze": true,
