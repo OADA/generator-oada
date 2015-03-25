@@ -3,5 +3,6 @@
     "fileExtensions": [ ".js" ],
     "validateIndentation": 4,
     "maximumLineLength": 80,
+    "requireCapitalizedConstructors": true,
     "excludeFiles": [ "node_modules/**" ]
 }
