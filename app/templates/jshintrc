@@ -6,7 +6,6 @@
     "immed": true,
     "latedef": "nofunc",
     "noarg": true,
-    "noempty": true,
     "nonew": true,
     "quotmark": "single",
     "undef": true,
