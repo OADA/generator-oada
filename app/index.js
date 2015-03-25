@@ -279,6 +279,12 @@ module.exports = generators.Base.extend({
                 this.destinationPath('.editorconfig')
             );
         },
+        ack: function() {
+            this.fs.copy(
+                this.templatePath('ackrc'),
+                this.destinationPath('.ackrc')
+            );
+        },
         jshint: function() {
             this.fs.copy(
                 this.templatePath('jshintrc'),
