@@ -6,12 +6,15 @@ node_js:
 - node
 - iojs
 sudo: false
+before_deploy:
+- npm install -g npm
 deploy:
   provider: npm
   email: <%= authorEmail %>
   api_key:
     secure: <%= travisNpmKey %>
   on:
+    node: node
     tags: true
     all_branches: true
     repo: OADA/<%= repoName %>
