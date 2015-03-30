@@ -19,7 +19,7 @@ deploy:
     all_branches: true
     repo: OADA/<%= repoName %>
 before_install:
- - npm install -g coveralls
+- npm install -g coveralls
 script:
 - npm run lint
 - npm run style
