@@ -166,6 +166,13 @@ module.exports = generators.Base.extend({
                     type: 'confirm',
                     default: 'true',
                     message: 'Use gulp?'
+                },
+                {
+                    store: true,
+                    name: 'browser',
+                    type: 'confirm',
+                    default: true,
+                    message: 'Test your code in browser (browserify)?'
                 }
             ];
 
@@ -312,10 +319,26 @@ module.exports = generators.Base.extend({
                 this.context
             );
         },
+        karma: function() {
+            if (!this.context.browser) {
+                return;
+            }
+
+            this.fs.copyTpl(
+                this.templatePath('_karma.conf.js'),
+                this.destinationPath('karma.conf.js'),
+                this.context
+            );
+        },
         mocha: function() {
             this.fs.copy(
                 this.templatePath('test/mocha.opts'),
                 this.destinationPath(testDir + '/mocha.opts')
+            );
+            this.fs.copyTpl(
+                this.templatePath('test/setup.js'),
+                this.destinationPath('test/setup.js'),
+                this.context
             );
             this.fs.writeJSON(
                 this.destinationPath(testDir + '/.jshintrc'),
@@ -397,7 +420,25 @@ module.exports = generators.Base.extend({
             }
 
             this.npmInstall(['gulp', 'gulp-jshint', 'gulp-jscs'],
-                    {saveDev: 'true'});
+                    {saveDev: true});
+        },
+        karma: function() {
+            if (!this.context.browser) {
+                return;
+            }
+
+            this.npmInstall([
+                'karma',
+                'karma-browserify',
+                'browserify-istanbul',
+                'brfs',
+                'karma-coverage',
+                'karma-mocha',
+                'karma-mocha-reporter',
+                'karma-phantomjs-launcher'
+                ], {
+                    saveDev: true
+                });
         }
     }
 });

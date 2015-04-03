@@ -5,6 +5,12 @@ node_js:
 - '0.12'
 - node
 - iojs
+env:
+- TEST=cover
+<% if(browser) { %>matrix:
+  include:
+  - node_js: node
+    env: TEST=browser-test<% } %>
 sudo: false
 before_deploy:
 - npm install -g npm
@@ -23,6 +29,6 @@ before_install:
 script:
 - npm run lint
 - npm run style
-- npm run cover
+- npm run $TEST
 after_success:
 - cat ./coverage/lcov.info | coveralls --verbose
