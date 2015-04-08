@@ -410,7 +410,7 @@ module.exports = generators.Base.extend({
                 return;
             }
 
-            this.npmInstal(['bluebird'], {save: true});
+            this.npmInstall(['bluebird'], {save: true});
         },
         istanbul: function() {
             this.npmInstall(['istanbul'], {saveDev: true});
