@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha -w",<% if(browser) { %>
     "browser-test": "./node_modules/karma/bin/karma start --single-run",<% } %>
-    "cover": "istanbul cover _mocha",
+    "cover": "istanbul cover _mocha",<% if(browser) { %>
+    "browser-cover": "./node_modules/karma/bin/karma start --single-run --cover",<% } %>
     "lint": "jshint --reporter node_modules/jshint-stylish/stylish.js .",
     "style": "jscs .",
     "clean": "rm -rf ./coverage"

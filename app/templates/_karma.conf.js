@@ -17,7 +17,17 @@
 
 require('./test/setup.js');
 
+var args = require('yargs').argv;
+
 module.exports = function(config) {
+    var reporters = ['mocha'];
+    var transforms = ['brfs'];
+
+    if (args.cover) {
+        reporters.push('coverage');
+        transforms.push('browserify-istanbul');
+    }
+
     config.set({
         basePath: '',
 
@@ -36,22 +46,10 @@ module.exports = function(config) {
 
         browserify: {
             debug: true,
-            transform: [
-                'brfs',
-                [
-                    'browserify-istanbul',
-                    {
-                        ignore: [
-                            'test/**',
-                            '**/node_modules/**',
-                            '**/bower_components/**'
-                        ]
-                    }
-                ],
-            ]
+            transform: transforms
         },
 
-        reporters: ['mocha', 'coverage'],
+        reporters: reporters,
 
         coverageReporter: {
             type: 'lcov',

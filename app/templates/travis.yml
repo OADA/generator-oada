@@ -10,7 +10,7 @@ env:
 <% if(browser) { %>matrix:
   include:
   - node_js: node
-    env: TEST=browser-test<% } %>
+    env: TEST=browser-cover<% } %>
 sudo: false
 before_deploy:
 - npm install -g npm

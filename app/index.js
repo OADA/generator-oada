@@ -429,10 +429,11 @@ module.exports = generators.Base.extend({
 
             this.npmInstall([
                 'karma',
+                'yargs',
                 'karma-browserify',
                 'browserify-istanbul',
                 'brfs',
-                'karma-coverage',
+                'karma-coverage@0.2.6',
                 'karma-mocha',
                 'karma-mocha-reporter',
                 'karma-phantomjs-launcher'
