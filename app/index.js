@@ -454,7 +454,8 @@ module.exports = generators.Base.extend({
                 'karma-coverage@0.2.6',
                 'karma-mocha',
                 'karma-mocha-reporter',
-                'karma-phantomjs-launcher'
+                'karma-phantomjs-launcher',
+                'karma-phantomjs-shim'
                 ], {
                     saveDev: true
                 });
