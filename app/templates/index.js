@@ -14,3 +14,5 @@
  */
 
 'use strict';
+<% if(promises) { %>
+var Promise = require('bluebird');<% } %>

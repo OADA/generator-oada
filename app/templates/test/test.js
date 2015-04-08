@@ -15,7 +15,9 @@
 
 'use strict';
 
-var expect = require('chai').expect;
+var chai = require('chai');<% if(promises) { %>
+chai.use(require('chai-as-promised'));<% } %>
+var expect = chai.expect;
 //var <%= varName %> = require('../');
 var mut = require('../');
 

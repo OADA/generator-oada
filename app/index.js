@@ -173,6 +173,13 @@ module.exports = generators.Base.extend({
                     type: 'confirm',
                     default: true,
                     message: 'Test your code in browser (browserify)?'
+                },
+                {
+                    store: true,
+                    name: 'promises',
+                    type: 'confirm',
+                    default: true,
+                    message: 'Use promises (bluebird)?'
                 }
             ];
 
@@ -398,6 +405,13 @@ module.exports = generators.Base.extend({
     },
 
     install: {
+        promises: function() {
+            if (!this.context.promises) {
+                return;
+            }
+
+            this.npmInstal(['bluebird'], {save: true});
+        },
         istanbul: function() {
             this.npmInstall(['istanbul'], {saveDev: true});
         },
@@ -406,6 +420,10 @@ module.exports = generators.Base.extend({
         },
         chai: function() {
             this.npmInstall(['chai'], {saveDev: true});
+
+            if (this.context.promises) {
+                this.npmInstall(['chai-as-promised'], {saveDev: true});
+            }
         },
 
         jshint: function() {
