@@ -238,7 +238,7 @@ module.exports = generators.Base.extend({
                         },
                     },
                     {
-                        name: 'travisNpmKey',
+                        name: 'npmApiKey',
                         type: 'input',
                         default: generator.conf.npmKey,
                         message: 'Enter NPM API key, or username:password.',
