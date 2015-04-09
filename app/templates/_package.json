@@ -12,6 +12,12 @@
     "style": "jscs .",
     "clean": "rm -rf ./coverage"
   },
+  "pre-commit": [
+    "lint",
+    "style",
+    "test"<% if(browser) { %>,
+    "browser-test"<% } %>
+  ],
   "directories": {
     "test": "test"
   },

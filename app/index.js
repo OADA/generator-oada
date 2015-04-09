@@ -19,6 +19,7 @@ var generators = require('yeoman-generator');
 var encrypt = require('travis-encrypt');
 var is = require('is_js');
 var objectAssign = require('object-assign');
+var mkdirp = require('mkdirp');
 
 var npmconf = require('npmconf');
 var gitconf = require('git-config');
@@ -431,6 +432,14 @@ module.exports = generators.Base.extend({
         },
         jscs: function() {
             this.npmInstall(['jscs'], {saveDev: true});
+        },
+        precommit: function() {
+            var done = this.async();
+            mkdirp(this.destinationPath('.git/hooks'), function(err) {
+                if (err) { this.log(err); }
+                this.npmInstall(['pre-commit'], {saveDev: true});
+                done();
+            }.bind(this));
         },
         gulp: function() {
             if (!this.context.gulpfile) {
