@@ -100,29 +100,17 @@ module.exports = generators.Base.extend({
             } catch (err) {
                 this.log(err);
             }
+        },
+        context: function() {
+            this.context = objectAssign({}, this.conf);
         }
     },
 
     prompting: {
-        general: function() {
+        author: function() {
             var done = this.async();
-            var generator = this;
 
             var prompts = [
-                {
-                    store: false,
-                    name: 'libName',
-                    type: 'input',
-                    default: this.conf.libName,
-                    message: 'What do you want to call your lib?'
-                },
-                {
-                    store: true,
-                    name: 'libDesc',
-                    type: 'input',
-                    default: this.conf.libDesc,
-                    message: 'Describe your library:'
-                },
                 {
                     store: true,
                     name: 'authorName',
@@ -144,57 +132,12 @@ module.exports = generators.Base.extend({
                     type: 'input',
                     default: this.conf.url,
                     message: 'What is the Author\'s URL (optional)?',
-                    validate: function(str) {return !str || is.url(str);}
-                },
-                {
-                    store: false,
-                    name: 'copyrightYear',
-                    type: 'input',
-                    message: 'What year is the copyright?',
-                    default: function() {
-                        return generator.config.get('copyrightYear') ||
-                                (new Date(Date.now())).getFullYear();
-                    },
-                    validate: function(str) {return is.number(+str);},
-                    filter: function(year) {
-                        generator.config.set('copyrightYear', year);
-                        return year;
-                    }
-                },
-                {
-                    store: true,
-                    name: 'gulpfile',
-                    type: 'confirm',
-                    default: 'true',
-                    message: 'Use gulp?'
-                },
-                {
-                    store: true,
-                    name: 'browser',
-                    type: 'confirm',
-                    default: true,
-                    message: 'Test your code in browser (browserify)?'
-                },
-                {
-                    store: true,
-                    name: 'promises',
-                    type: 'confirm',
-                    default: true,
-                    message: 'Use promises (bluebird)?'
+                    validate: function(str) { return !str || is.url(str); }
                 }
             ];
 
             this.prompt(prompts, function(ans) {
-                this.context = objectAssign({}, this.conf, ans);
-
-                this.context.repoName = ans.libName;
-                this.context.packageName = ans.libName
-                        .replace(/^node-/, '')
-                        .replace(/[.-]?js$/, '');
-                this.context.varName = this.context.packageName
-                        .replace(/[-_.](.)/g, function(m, p) {
-                            return p.toUpperCase();
-                        });
+                this.context = objectAssign(this.context, ans);
 
                 this.context.authorJSON = JSON.stringify(
                         {
@@ -205,9 +148,77 @@ module.exports = generators.Base.extend({
                         null,
                         2
                     ).replace(/\n/g, '\n  ');
+
                 this.context.authorStr = ans.authorName +
                     ' <' + ans.authorEmail + '>' +
                     (ans.authorUrl && (' (' + ans.authorUrl + ')'));
+
+                done();
+            }.bind(this));
+        },
+        general: function() {
+            var done = this.async();
+
+            var prompts = [
+                {
+                    name: 'libName',
+                    type: 'input',
+                    default: this.conf.libName,
+                    message: 'What do you want to call your lib?'
+                },
+                {
+                    name: 'libDesc',
+                    type: 'input',
+                    default: this.conf.libDesc,
+                    message: 'Describe your library:'
+                },
+                {
+                    name: 'copyrightYear',
+                    type: 'input',
+                    message: 'What year is the copyright?',
+                    default: function() {
+                        return (new Date(Date.now())).getFullYear();
+                    },
+                    validate: function(str) { return is.number(+str); }
+                },
+                {
+                    name: 'gulpfile',
+                    type: 'confirm',
+                    default: false,
+                    message: 'Use gulp?'
+                },
+                {
+                    name: 'browser',
+                    type: 'confirm',
+                    default: true,
+                    message: 'Test your code in browser (browserify)?'
+                },
+                {
+                    name: 'promises',
+                    type: 'confirm',
+                    default: true,
+                    message: 'Use promises (bluebird)?'
+                }
+            ];
+
+            // Load previous answers
+            prompts.forEach(function(prompt) {
+                var stored = this.config.get(prompt.name);
+                prompt.default = stored === undefined ? prompt.default : stored;
+            }.bind(this));
+
+            this.prompt(prompts, function(ans) {
+                this.context = objectAssign(this.context, ans);
+                this.localStore = ans;
+
+                this.context.repoName = ans.libName;
+                this.context.packageName = ans.libName
+                        .replace(/^node-/, '')
+                        .replace(/[.-]?js$/, '');
+                this.context.varName = this.context.packageName
+                        .replace(/[-_.](.)/g, function(m, p) {
+                            return p.toUpperCase();
+                        });
 
                 done();
             }.bind(this));
@@ -218,7 +229,6 @@ module.exports = generators.Base.extend({
 
             this.prompt([
                     {
-                        store: false,
                         name: 'genNpmKey',
                         type: 'confirm',
                         default: false,
@@ -228,8 +238,7 @@ module.exports = generators.Base.extend({
                         },
                     },
                     {
-                        store: false,
-                        name: 'npmApiKey',
+                        name: 'travisNpmKey',
                         type: 'input',
                         default: generator.conf.npmKey,
                         message: 'Enter NPM API key, or username:password.',
@@ -265,6 +274,13 @@ module.exports = generators.Base.extend({
     },
 
     configuring: {
+        localStore: function() {
+            for (var key in this.localStore) {
+                if (this.localStore.hasOwnProperty(key)) {
+                    this.config.set(key, this.context[key]);
+                }
+            }
+        },
         license: function() {
             this.fs.copy(
                 this.templatePath('_LICENSE'),
