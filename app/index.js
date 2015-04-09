@@ -271,20 +271,8 @@ module.exports = generators.Base.extend({
                 this.destinationPath('LICENSE')
             );
             this.fs.copyTpl(
-                this.templatePath('_AUTHORS'),
-                this.destinationPath('AUTHORS'),
-                this.context
-            );
-            this.fs.copyTpl(
                 this.templatePath('_NOTICE'),
                 this.destinationPath('NOTICE'),
-                this.context
-            );
-        },
-        readme: function() {
-            this.fs.copyTpl(
-                this.templatePath('_README.md'),
-                this.destinationPath('README.md'),
                 this.context
             );
         },
@@ -388,18 +376,45 @@ module.exports = generators.Base.extend({
     },
 
     writing: {
+        readme: function() {
+            var dest = this.destinationPath('README.md');
+            if (this.fs.exists(dest)) { return; }
+
+            this.fs.copyTpl(
+                this.templatePath('_README.md'),
+                dest,
+                this.context
+            );
+        },
+        authors: function() {
+            var dest = this.destinationPath('AUTHORS');
+            if (this.fs.exists(dest)) { return; }
+
+            this.fs.copyTpl(
+                this.templatePath('_AUTHORS'),
+                dest,
+                this.context
+            );
+        },
         main: function() {
+            var dest = this.destinationPath(this.context.main);
+            if (this.fs.exists(dest)) { return; }
+
             this.fs.copyTpl(
                 this.templatePath('index.js'),
-                this.destinationPath(this.context.main),
+                dest,
                 this.context
             );
         },
         test: function() {
+            var dest = this.destinationPath(
+                testDir + '/' + this.context.packageName + '.test.js'
+            );
+            if (this.fs.exists(dest)) { return; }
+
             this.fs.copyTpl(
                 this.templatePath('test/test.js'),
-                this.destinationPath(
-                    testDir + '/' + this.context.packageName + '.test.js'),
+                dest,
                 this.context
             );
         }
