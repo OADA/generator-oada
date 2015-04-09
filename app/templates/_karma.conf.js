@@ -31,7 +31,7 @@ module.exports = function(config) {
     config.set({
         basePath: '',
 
-        frameworks: ['mocha', 'browserify', 'karma-phantomjs-shim'],
+        frameworks: ['mocha', 'browserify', 'phantomjs-shim'],
 
         files: [
             'test/**/*.test.js'
