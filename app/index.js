@@ -347,11 +347,6 @@ module.exports = generators.Base.extend({
                 this.templatePath('test/mocha.opts'),
                 this.destinationPath(testDir + '/mocha.opts')
             );
-            this.fs.copyTpl(
-                this.templatePath('test/setup.js'),
-                this.destinationPath('test/setup.js'),
-                this.context
-            );
             this.fs.writeJSON(
                 this.destinationPath(testDir + '/.jshintrc'),
                 objectAssign(
@@ -431,6 +426,11 @@ module.exports = generators.Base.extend({
             this.fs.copyTpl(
                 this.templatePath('test/test.js'),
                 dest,
+                this.context
+            );
+            this.fs.copyTpl(
+                this.templatePath('test/setup.js'),
+                this.destinationPath('test/setup.js'),
                 this.context
             );
         }
