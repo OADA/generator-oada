@@ -4,7 +4,7 @@
   "description": "<%= libDesc %>",
   "main": "<%= main %>",
   "scripts": {
-    "test": "mocha -w",<% if(browser) { %>
+    "test": "mocha",<% if(browser) { %>
     "browser-test": "./node_modules/karma/bin/karma start --single-run",<% } %>
     "cover": "istanbul cover _mocha",<% if(browser) { %>
     "browser-cover": "./node_modules/karma/bin/karma start --single-run --cover",<% } %>
