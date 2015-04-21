@@ -36,9 +36,9 @@ module.exports = generators.Base.extend({
             };
         },
         dir: function() {
-            this.conf.libName =
+            this.conf.repoName =
                     this.destinationPath().match(/\/([^\/]+\/?)$/)[1] ||
-                    this.conf.libName;
+                    this.conf.repoName;
         },
         gitConfig: function() {
             var done = this.async();
@@ -90,10 +90,11 @@ module.exports = generators.Base.extend({
                     this.conf.url = json.author.url || this.conf.url;
                 }
 
-                this.conf.libName =
+                this.conf.repoName =
                         (json.repository && json.repository.url &&
                             json.repository.url.match(/\/([^\/]+).git$/)[1]) ||
-                        json.name || this.conf.libName;
+                        json.name || this.conf.repoName;
+                this.conf.packageName = json.name || this.conf.packageName;
                 this.conf.version = json.version || this.conf.version;
                 this.conf.main = json.main || this.conf.main;
                 this.conf.libDesc = json.description || this.conf.libDesc;
@@ -161,16 +162,26 @@ module.exports = generators.Base.extend({
 
             var prompts = [
                 {
-                    name: 'libName',
+                    name: 'repoName',
                     type: 'input',
-                    default: this.conf.libName,
-                    message: 'What do you want to call your lib?'
+                    default: this.conf.repoName,
+                    message: 'What is your GitHub repo called?'
+                },
+                {
+                    name: 'packageName',
+                    type: 'input',
+                    default: this.conf.packageName || function(ans) {
+                        return ans.repoName
+                            .replace(/^node-/, '')
+                            .replace(/[.-]?js$/, '');
+                    },
+                    message: 'What do you want to call your npm package?'
                 },
                 {
                     name: 'libDesc',
                     type: 'input',
                     default: this.conf.libDesc,
-                    message: 'Describe your library:'
+                    message: 'Describe your package:'
                 },
                 {
                     name: 'copyrightYear',
@@ -205,10 +216,6 @@ module.exports = generators.Base.extend({
                 this.context = objectAssign(this.context, ans);
                 this.localStore = ans;
 
-                this.context.repoName = ans.libName;
-                this.context.packageName = ans.libName
-                        .replace(/^node-/, '')
-                        .replace(/[.-]?js$/, '');
                 this.context.varName = this.context.packageName
                         .replace(/[-_.](.)/g, function(m, p) {
                             return p.toUpperCase();
