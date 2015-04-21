@@ -182,12 +182,6 @@ module.exports = generators.Base.extend({
                     validate: function(str) { return is.number(+str); }
                 },
                 {
-                    name: 'gulpfile',
-                    type: 'confirm',
-                    default: false,
-                    message: 'Use gulp?'
-                },
-                {
                     name: 'browser',
                     type: 'confirm',
                     default: true,
@@ -318,17 +312,6 @@ module.exports = generators.Base.extend({
             this.fs.copy(
                 this.templatePath('jscsrc'),
                 this.destinationPath('.jscsrc')
-            );
-        },
-        gulp: function() {
-            if (!this.context.gulpfile) {
-                return;
-            }
-
-            this.fs.copyTpl(
-                this.templatePath('_gulpfile.js'),
-                this.destinationPath('gulpfile.js'),
-                this.context
             );
         },
         karma: function() {
@@ -471,14 +454,6 @@ module.exports = generators.Base.extend({
                 this.npmInstall(['pre-commit'], {saveDev: true});
                 done();
             }.bind(this));
-        },
-        gulp: function() {
-            if (!this.context.gulpfile) {
-                return;
-            }
-
-            this.npmInstall(['gulp', 'gulp-jshint', 'gulp-jscs'],
-                    {saveDev: true});
         },
         karma: function() {
             if (!this.context.browser) {
