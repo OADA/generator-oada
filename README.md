@@ -11,6 +11,9 @@ $ npm install -g generator-oada
 ```
 
 ## Usage ##
+
+**NOTE**: Travis must be enabled on the repo **before** running this generator.
+
 To run this generator when starting a new OADA project,
 run the following in the root of the project:
 ```shellsession
