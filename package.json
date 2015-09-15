@@ -5,7 +5,7 @@
   "main": "app/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "jshint --reporter node_modules/jshint-stylish/stylish.js .",
+    "lint": "jshint --reporter node_modules/jshint-stylish .",
     "style": "jscs ."
   },
   "repository": {
@@ -37,9 +37,9 @@
     "yeoman-generator": "^0.19.2"
   },
   "devDependencies": {
-    "jshint-stylish": "~1.0.1",
-    "jshint": "^2.6.3",
-    "jscs": "^1.11.3"
+    "jscs": "^2.1.1",
+    "jshint": "^2.8.0",
+    "jshint-stylish": "^2.0.1"
   },
   "peerDependencies": {
     "yo": ">=1.4.6"
